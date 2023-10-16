@@ -22,5 +22,30 @@ public class TrustPage {
     @FindBy(xpath = "//a[contains(text(),'here')]")
     public WebElement here;
 
+    @FindBy(css = "svg[data-testid='RefreshIcon']")
+    public WebElement refreshIcon;
+
+    @FindBy(css = "svg[data-testid='ThumbDownIcon']")
+    public WebElement thumbDownIcon;
+
+    @FindBy(css = "svg[class='MuiSvgIcon-root MuiSvgIcon-colorError MuiSvgIcon-fontSizeSmall css-fj16jz-MuiSvgIcon-root']")
+    public WebElement redThumbDownIcon;
+
+    @FindBy(css = "svg[data-testid='ThumbUpIcon']")
+    public WebElement thumbUpIcon;
+
+    @FindBy(css = "svg[class='MuiSvgIcon-root MuiSvgIcon-colorSuccess MuiSvgIcon-fontSizeSmall css-5n9jjn-MuiSvgIcon-root']")
+    public WebElement greenThumbUpIcon;
+
+   @FindBy(css = "svg[data-testid='AttachFileIcon']")
+    public WebElement attachFileIcon;
+
+   @FindBy(css = "svg[data-testid='SentimentVerySatisfiedIcon']")
+           public WebElement emojiBtn;
+   @FindBy(css = "iframe[id='kodif-chat-widget']")
+    public WebElement iframe;
+
+
+
 
 }
