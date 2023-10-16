@@ -485,5 +485,14 @@ public class BrowserUtils {
         new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(time)).until(ExpectedConditions.presenceOfElementLocated(by));
     }
 
+     /* Waits for the frame with the given name or id to be available and switches to it.
+     *
+             * @param frameNameOrId The name or id of the frame to switch to.
+     * @param timeInSeconds The maximum time (in seconds) to wait for the frame.
+            */
+    public static void waitForFrameAndSwitchToIt(String frameNameOrId, int timeInSeconds) {
+        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(timeInSeconds));
+        wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(frameNameOrId));
+    }
 
 }
