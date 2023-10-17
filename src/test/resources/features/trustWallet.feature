@@ -10,9 +10,6 @@ Feature: User Interaction with TrustWallet Chat
 
 @ThumbsUp&Down
 Scenario: User Rates the Response
-  Given the user is on the TrustWallet chat interface
-  When the user asks a question and receives a response with a link
-
   When the user clicks the thumbs-up icon
   Then the thumbs-up icon should change color to green
   And the thumbs-down icon should remain unchanged
@@ -20,4 +17,31 @@ Scenario: User Rates the Response
   When the user clicks the thumbs-down icon
   Then the thumbs-down icon should change color to red
   And the thumbs-up icon should remain unchanged
+
+  @CheckResponseTime
+  Scenario: User Checks Response Time
+    When the user records the time the question was sent
+    And records the time the response was received
+    Then the time difference between sending and receiving should be calculated
+    And the calculated time difference should be within an acceptable threshold
+
+  @RefreshButton
+  Scenario: User Refreshes the Chat
+    When the user clicks the refresh button
+    Then the chat interface should reload and clear the previous response
+    Then check for the presence of the default message
+
+  @AttachmentButton
+  Scenario: User attaches a file
+    Given the user is on the chat interface
+    When the user clicks the attachment button
+    Then a file attachment dialog should appear
+
+  @EmojiButton
+  Scenario: User adds an emoji
+    Given the user is on the chat interface
+    When the user clicks the emoji button
+    Then an emoji selection dialog should appear
+
+
 

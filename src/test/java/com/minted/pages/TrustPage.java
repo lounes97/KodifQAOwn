@@ -28,13 +28,13 @@ public class TrustPage {
     @FindBy(css = "svg[data-testid='ThumbDownIcon']")
     public WebElement thumbDownIcon;
 
-    @FindBy(css = "svg[class='MuiSvgIcon-root MuiSvgIcon-colorError MuiSvgIcon-fontSizeSmall css-fj16jz-MuiSvgIcon-root']")
+    @FindBy(xpath = "(//button[contains(@class,'MuiButtonBase-root')])[2]")
     public WebElement redThumbDownIcon;
 
     @FindBy(css = "svg[data-testid='ThumbUpIcon']")
     public WebElement thumbUpIcon;
 
-    @FindBy(css = "svg[class='MuiSvgIcon-root MuiSvgIcon-colorSuccess MuiSvgIcon-fontSizeSmall css-5n9jjn-MuiSvgIcon-root']")
+    @FindBy(css = "span[class='MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root']:first-child")
     public WebElement greenThumbUpIcon;
 
    @FindBy(css = "svg[data-testid='AttachFileIcon']")
@@ -44,6 +44,15 @@ public class TrustPage {
            public WebElement emojiBtn;
    @FindBy(css = "iframe[id='kodif-chat-widget']")
     public WebElement iframe;
+
+   @FindBy(xpath = "//button[@class='MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium css-1gpkj7r-MuiButtonBase-root-MuiButton-root']")
+    public WebElement newConversationBtn;
+
+   @FindBy(xpath = "//div[@class='MuiBox-root css-1bkwata']")
+    public WebElement sessionHasExpired;
+
+   @FindBy(xpath = "(//div[@class='makeStyles-messageBubble-31 makeStyles-agentMessageBubble-32'])[2]")
+    public WebElement defaultMsg2;
 
 
 
