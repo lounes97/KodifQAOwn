@@ -2,6 +2,7 @@ package com.minted.utility;
 
 import org.junit.Assert;
 import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -9,6 +10,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -495,4 +497,22 @@ public class BrowserUtils {
         wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(frameNameOrId));
     }
 
+
+//    public static void frameToBeAvailableAndSwitchToIt(WebDriver driver) {
+//        try {
+//            driver.switchTo().parentFrame();
+//        } catch (WebDriverException e) {
+//            System.out.println("Exception while switching to the parent frame: " + e.getMessage());
+//            // Handle the exception or log it as needed
+//        }
+//    }
+    public static void switchToIframe(WebDriver driver, WebElement iframeElement) {
+        driver.switchTo().frame(iframeElement);
+        driver.quit();
+    }
+
+    public static LocalDateTime captureCurrentTime() {
+        return LocalDateTime.now();
+
+    }
 }
