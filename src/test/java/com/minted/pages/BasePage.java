@@ -18,7 +18,8 @@ public abstract class BasePage {
     @FindBy(xpath = "//input[@class='button r4 wide primary']")
     public WebElement loginButton;
 
-    @FindBy(xpath = "//button[@class='chakra-button react-draggable css-1746jid']")
+    @FindBy(xpath = "//div[@id='kodif-extension-root']//button[@type='button']")
+    //@FindBy(xpath = "//button[@class='chakra-button react-draggable css-1746jid']")
     public WebElement coPilotIcon;
 
     @FindBy(xpath = "//p[@data-test-id='kodif-intro-msg']")
