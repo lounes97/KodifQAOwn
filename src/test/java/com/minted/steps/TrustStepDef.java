@@ -9,15 +9,13 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.util.Set;
+import java.awt.*;
+import java.awt.datatransfer.StringSelection;
+import java.io.File;
 
 import static org.junit.Assert.*;
-import static org.openqa.selenium.support.ui.ExpectedConditions.*;
 
 public class TrustStepDef {
     private long questionSentTime;
@@ -27,40 +25,31 @@ public class TrustStepDef {
 
     @Given("the user is on the TrustWallet chat interface")
     public void theUserIsOnTheTrustWalletChatInterface() {
-        //BrowserUtils.waitForFrameAndSwitchToIt("kodif-chat-widget", 25);
-       // BrowserUtils.waitForVisibility(trustPage.iframe, 25);
-        //Driver.getDriver().switchTo().parentFrame();
+
         Driver.getDriver().switchTo().frame("kodif-chat-widget");
-
-       // Driver.getDriver().switchTo().frame("kodif-chat-widget");
-
-        BrowserUtils.waitForVisibility(trustPage.trustSearchBox, 15);
+        BrowserUtils.waitForVisibility(trustPage.trustSearchBox, 20);
         trustPage.trustSearchBox.sendKeys("What is wallet?");
         trustPage.submitBtn.click();
+
     }
 
     @When("the user asks a question and receives a response with a link")
     public void theUserAsksAQuestionAndReceivesAResponseWithALink() {
-       BrowserUtils.waitForClickablility(trustPage.here, 20);
-       trustPage.here.click();
-//        Set<String> windowHandles = Driver.getDriver().getWindowHandles();
-//        String firstHandle = "";
-//        for (String windowHandle : windowHandles) {
-//            firstHandle=windowHandle;
-//            break;
-//        }
-//        Driver.getDriver().switchTo().window(firstHandle);
+
+        BrowserUtils.waitForClickablility(trustPage.here, 25);
+        trustPage.here.click();
 
     }
 
     @Then("the link provided should not be blank")
     public void thenTheLinkProvidedShouldNotBeBlank() {
-        //Assert.assertFalse(trustPage.here.getAttribute("href").contains("blank"));
-        // BrowserUtils.waitForVisibility(trustPage.here, 10);
+
+
         assertNotNull("Link is null", trustPage.here);
+        assertFalse("Link href is blank", trustPage.here.getAttribute("href").isEmpty());
 
         System.out.println("\n\n\n" + trustPage.here.getAttribute("href").toString() + "\n\n\n");
-       // Driver.getDriver().switchTo().parentFrame();
+
 
     }
 
@@ -73,12 +62,12 @@ public class TrustStepDef {
 
     @Then("the thumbs-up icon should change color to green")
     public void theThumbsUpIconShouldChangeColorToGreen() {
-        WebElement regularThumbUpIcon= trustPage.thumbUpIcon;
-        //BrowserUtils.waitForVisibility(trustPage.greenThumbUpIcon, 15);
-       // WebElement greenThumbUpIcon= trustPage.greenThumbUpIcon;
-        //String regularIconColor = regularThumbUpIcon.getCssValue("color");
-       // String greenIconColor = greenThumbUpIcon.getCssValue("color");
-       // assertNotEquals(regularIconColor, greenIconColor);
+        WebElement regularThumbUpIcon = trustPage.thumbUpIcon;
+        BrowserUtils.waitForVisibility(trustPage.greenThumbUpIcon, 25);
+        WebElement greenThumbUpIcon= trustPage.greenThumbUpIcon;
+        String regularIconColor = regularThumbUpIcon.getCssValue("color");
+        String greenIconColor = greenThumbUpIcon.getCssValue("color");
+        assertNotEquals(regularIconColor, greenIconColor);
     }
 
     @And("the thumbs-down icon should remain unchanged")
@@ -88,13 +77,14 @@ public class TrustStepDef {
 
     @When("the user clicks the thumbs-down icon")
     public void theUserClicksTheThumbsDownIcon() {
-        WebElement regularThumbDownIcon= trustPage.thumbDownIcon;
+        WebElement regularThumbDownIcon = trustPage.thumbDownIcon;
         regularThumbDownIcon.click();
-        BrowserUtils.waitFor(10);
-       // WebElement redThumbDownIcon= trustPage.redThumbDownIcon;
-        //String regularIconColor = regularThumbDownIcon.getCssValue("color");
-        //String redIconColor = redThumbDownIcon.getCssValue("color");
-       // assertNotEquals(regularIconColor, redIconColor);
+        BrowserUtils.waitFor(15);
+        WebElement redThumbDownIcon = trustPage.redThumbDownIcon;
+        String regularIconColor = regularThumbDownIcon.getCssValue("color");
+        String redIconColor = redThumbDownIcon.getCssValue("color");
+        assertNotEquals(regularIconColor, redIconColor);
+        System.out.println("***\n\n\n" + regularIconColor + "\n\n\n" + redIconColor + "\n\n\n***");
     }
 
     @Then("the thumbs-down icon should change color to red")
@@ -118,7 +108,7 @@ public class TrustStepDef {
 
     @Then("check for the presence of the default message")
     public void checkForThePresenceOfTheDefaultMessage() {
-        Assert.assertTrue("Default message is not present after refreshing the chat interface", trustPage.defaultMsg2.isDisplayed());
+        Assert.assertTrue("***\n\n\nDefault message is not present after refreshing the chat interface\n\n\n***", trustPage.defaultMsg2.isDisplayed());
     }
 
     @When("the user records the time the question was sent")
@@ -138,7 +128,11 @@ public class TrustStepDef {
     public void theTimeDifferenceBetweenSendingAndReceivingShouldBeCalculated() {
         // Calculate the time difference between sending and receiving
         timeDifference = responseReceivedTime - questionSentTime;
+        System.out.println("\n\n\n****timeDifference  = " + timeDifference + "\n\n\n***");
+        String times = trustPage.sendMsgTime.getText();
+
     }
+
 
     @And("the calculated time difference should be within an acceptable threshold")
     public void theCalculatedTimeDifferenceShouldBeWithinAnAcceptableThreshold() {
@@ -146,6 +140,7 @@ public class TrustStepDef {
 
         if (timeDifference > acceptableThreshold) {
             throw new AssertionError("Time difference exceeds the acceptable threshold.");
+
         }
     }
 
@@ -174,4 +169,67 @@ public class TrustStepDef {
     @Then("an emoji selection dialog should appear")
     public void anEmojiSelectionDialogShouldAppear() {
     }
+
+    String path;
+    String fileName;
+
+    @When("the user selects a .docx file to attach")
+    public void theUserSelectsAFileToAttach() throws AWTException {
+
+        // path = "/Users/adilyadanil/IdeaProjects/KodifQAOwn/attachments/What is wallet.docx";
+        path = System.getProperty("user.dir")+ File.separator +"attachments"+File.separator+"Attachment.docx";
+
+        int i = path.lastIndexOf(File.separator);
+        int j = path.lastIndexOf(".");
+        fileName = path.substring(i + 1, j);
+        StringSelection str = new StringSelection(path);
+
+        WebElement fileInput = Driver.getDriver().findElement(By.cssSelector("input[type='file']"));
+        fileInput.sendKeys(path);
+//
+//        Robot robot = new Robot();
+//        Toolkit.getDefaultToolkit().getSystemClipboard().setContents(str, null);
+//
+//        // cmd + tab is needed since it launches a java app and the browser looses focus
+//        robot.keyPress(KeyEvent.VK_META);
+//        robot.keyPress(KeyEvent.VK_TAB);
+//        robot.keyRelease(KeyEvent.VK_TAB);
+//        robot.keyRelease(KeyEvent.VK_META);
+//        robot.delay(500);
+//
+//        //open goto window
+//        robot.keyPress(KeyEvent.VK_META);
+//        robot.keyPress(KeyEvent.VK_SHIFT);
+//        robot.keyPress(KeyEvent.VK_G);
+//        robot.keyRelease(KeyEvent.VK_G);
+//        robot.keyRelease(KeyEvent.VK_SHIFT);
+//        robot.keyRelease(KeyEvent.VK_META);
+//        robot.delay(500);
+//
+//        //paste the clipboard value
+//        robot.keyPress(KeyEvent.VK_META);
+//        robot.keyPress(KeyEvent.VK_V);
+//        robot.keyRelease(KeyEvent.VK_META);
+//        robot.keyRelease(KeyEvent.VK_V);
+//        robot.delay(500);
+//
+//        //Press Enter key twice to close the Goto window and Upload window
+//        robot.keyPress(KeyEvent.VK_ENTER);
+//        robot.keyRelease(KeyEvent.VK_ENTER);
+//        robot.delay(500);
+//        robot.keyPress(KeyEvent.VK_ENTER);
+//        robot.keyRelease(KeyEvent.VK_ENTER);
+
+        BrowserUtils.waitForPresenceOfElement(By.xpath("//div[contains(text(),'" + fileName + "')]"),10);
+        BrowserUtils.waitFor(10);
+
+    }
+
+    @Then("file is successfully attached")
+    public void fileIsSuccessfullyAttached() {
+        WebElement attachedDoc = Driver.getDriver().findElement(By.xpath("//div[contains(text(),'" + fileName + "')]"));
+        Assert.assertTrue(attachedDoc.isDisplayed());
+    }
+
 }
+

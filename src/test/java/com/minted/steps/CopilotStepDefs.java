@@ -17,6 +17,8 @@ import org.openqa.selenium.support.ui.Select;
 
 import java.util.List;
 
+import static org.junit.Assert.assertTrue;
+
 public class CopilotStepDefs {
 
     SalesforcePage salesforcePage = new SalesforcePage();
@@ -71,7 +73,7 @@ public class CopilotStepDefs {
         salesforcePage.maximizeBtn.click();
         frameWidth2 = salesforcePage.copilotFrame.getSize().getWidth();
 
-        Assert.assertTrue(frameWidth2 > frameWidth1);
+        assertTrue(frameWidth2 > frameWidth1);
 
     }
 
@@ -80,7 +82,7 @@ public class CopilotStepDefs {
 
         salesforcePage.minimizeBtn.click();
         frameWidth1 = salesforcePage.copilotFrame.getSize().getWidth();
-        Assert.assertTrue(frameWidth2 > frameWidth1);
+        assertTrue(frameWidth2 > frameWidth1);
     }
 
     List<WebElement> elements;
@@ -92,7 +94,7 @@ public class CopilotStepDefs {
         salesforcePage.commandButton.click();
         elements = Driver.getDriver().findElements(By.xpath("//div[contains(@class,'kodif-menu-item')]"));
         System.out.println("elements.size() = " + elements.size());
-        Assert.assertTrue(elements.size() >= 1);
+        assertTrue(elements.size() >= 1);
         boolean containAskKb = false;
         for (int i = 0; i < elements.size(); i++) {
             if (elements.get(i).getText().contains("/ask-kb")) {
@@ -101,7 +103,7 @@ public class CopilotStepDefs {
                 break;
             }
         }
-        Assert.assertTrue(containAskKb);
+        assertTrue(containAskKb);
     }
 
     @When("user enter a string in input field and press enter key")
@@ -118,11 +120,11 @@ public class CopilotStepDefs {
         BrowserUtils.waitFor(10);
         if (url.contains("Salesforce")) {
             salesforcePage.casesBox.click();
-            BrowserUtils.waitForClickablility(salesforcePage.caseNum, 10);
+            BrowserUtils.waitForClickablility(salesforcePage.caseNum, 25);
 
             salesforcePage.caseNum.click();
 
-            BrowserUtils.waitFor(10);
+            BrowserUtils.waitFor(20);
 
             salesforcePage.ticketSwitchDefaultText.isDisplayed();
 
@@ -133,64 +135,6 @@ public class CopilotStepDefs {
             BrowserUtils.waitFor(10);
 
             salesforcePage.ticketSwitchDefaultText.isDisplayed();
-        }
-    }
-
-    @When("user clicks on Suggestion action the insert button will appear under the suggestion text")
-    public void userClicksOnSuggestionOptionTheInsertButtonWillAppearUnderTheSuggestionText() {
-        BrowserUtils.waitForClickablility(salesforcePage.commandButton, 10);
-        salesforcePage.commandButton.click();
-        salesforcePage.SuggestionAction.click();
-
-    }
-
-    @And("user clicks on insert button which will copy and paste the text to the Post field")
-    public void userClicksOnInsertButtonWhichWillCopyAndPasteTheTextToThePostSection() {
-        BrowserUtils.waitForClickablility(salesforcePage.InsertBtn, 20);
-        salesforcePage.InsertBtn.click();
-        BrowserUtils.waitFor(20);
-    }
-
-    @Then("user verifies that the text inserted into the Post field matches the suggested response")
-    public void userVerifiesThatTheTextInsertedIntoThePostFieldMatchesTheSuggestedResponse() {
-        WebElement text = Driver.getDriver().findElement(By.xpath("(//p[@class='chakra-text css-1k2so8'])[1]"));
-
-        String suggestedText = salesforcePage.SuggestionText.getText();
-        String postText = salesforcePage.SuggestionPostText.getText();
-        Assert.assertTrue(salesforcePage.SuggestionPostText.getText().contains(postText));
-
-    }
-
-
-    @When("user clicks on Disposition action the insert button will appear under the disposition info")
-    public void userClicksOnDispositionOptionTheInsertButtonWillAppearUnderTheDispositionInfo() {
-        BrowserUtils.waitForClickablility(salesforcePage.commandButton, 15);
-        salesforcePage.commandButton.click();
-        BrowserUtils.waitForClickablility(salesforcePage.DispositionAction, 15);
-        salesforcePage.DispositionAction.click();
-    }
-
-    @And("user clicks on insert button which will copy and paste the info to Case Notes field")
-    public void userClicksOnInsertButtonWhichWillCopyAndPasteTheInfoToCaseNotesSection() {
-
-        BrowserUtils.waitForClickablility(salesforcePage.InsertBtn, 15);
-        salesforcePage.InsertBtn.click();
-        BrowserUtils.waitFor(15);
-    }
-
-
-    @Then("verify that the text inserted to Case Notes is matching with the suggested response")
-    public void verifyThatTheTextInsertedToCaseNotesIsMatchingWithTheSuggestedResponse() {
-        String dispositionText = salesforcePage.DispositionText.getText();
-        List<WebElement> containers = Driver.getDriver().findElements(By.xpath("//div[@class='container  activeState']"));
-
-        for (WebElement container : containers) {
-            List<WebElement> textareas = container.findElements(By.tagName("textarea"));
-            for (WebElement textarea : textareas) {
-                String textareaText = textarea.getAttribute("value");
-                // Assert.assertTrue(textareaText.contains(dispositionText));
-                Assert.assertTrue(salesforcePage.DispositionText.getText().contains(textareaText));
-            }
         }
     }
 }

@@ -16,13 +16,11 @@ import org.junit.runner.RunWith;
         features = "src/test/resources/features" ,
         glue = "com/minted/steps",
         dryRun = false,
-        tags = "@TrustSmoke"
+        tags = "@AttachFile"
 )
 public class CukesRunner {
 
 }
-
-
 
 
 
