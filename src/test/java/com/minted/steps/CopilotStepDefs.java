@@ -6,14 +6,12 @@ import com.minted.utility.BrowserUtils;
 import com.minted.utility.ConfigurationReader;
 import com.minted.utility.Driver;
 import io.cucumber.java.en.And;
-import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.Select;
 
 import java.util.List;
 
@@ -108,34 +106,51 @@ public class CopilotStepDefs {
 
     @When("user enter a string in input field and press enter key")
     public void userEnterAStringInInputFieldAndPressEnterKey() {
+        BrowserUtils.waitFor(15);
         salesforcePage.commandInput.sendKeys("I need help" + Keys.ENTER);
 
         Assert.assertFalse(salesforcePage.commandInput.isEnabled());
+        //Assert.assertTrue(salesforcePage.InputRespond.getText().contains("Could you please provide me with more details about the issue you're facing or the assistance you need?"));
     }
 
 
-    @When("user clicks on different ticket the default message should appear on the coPilot window")
-    public void userClicksOnDifferentTicketTheDefaultMessageShouldAppearOnTheCoPilotWindow() {
-        salesforcePage.commandInput.sendKeys("I need help" + Keys.ENTER);
-        BrowserUtils.waitFor(10);
-        if (url.contains("Salesforce")) {
-            salesforcePage.casesBox.click();
-            BrowserUtils.waitForClickablility(salesforcePage.caseNum, 25);
 
-            salesforcePage.caseNum.click();
+    String firstPosition;
+    String secondPosition;
+    @When("the user clicks on Dock button")
+    public void theUserClicksOnDockButton() {
+        firstPosition = salesforcePage.DockBtn.getAttribute("class");
+        salesforcePage.DockBtn.click();
 
-            BrowserUtils.waitFor(20);
+    }
 
-            salesforcePage.ticketSwitchDefaultText.isDisplayed();
+    @Then("the chatbot should be docked to the left side of the screen")
+    public void theChatbotShouldBeDockedToTheLeftSideOfTheScreen() {
+        secondPosition = salesforcePage.DockBtn.getAttribute("class");
+        Assert.assertNotEquals(firstPosition,secondPosition);
+    }
 
-        } else {
-            zendeskPage.zendeskSearchBoxOnMain.click();
+    @When("user refresh the page the chatbot should stay on the left side of the screen")
+    public void userRefreshThePageTheChatbotShouldStayOnTheLeftSideOfTheScreen() {
+        Driver.getDriver().navigate().refresh();
+        secondPosition = salesforcePage.DockBtn.getAttribute("class");
+        Assert.assertEquals(firstPosition,secondPosition);
+    }
 
-            zendeskPage.zendeskSearchBox.sendKeys("2522" + Keys.ENTER);
-            BrowserUtils.waitFor(10);
+    @Then("the chatbot should be docked to the right side of the screen")
+    public void theChatbotShouldBeDockedToTheRightSideOfTheScreen() {
+        secondPosition = salesforcePage.DockBtn.getAttribute("class");
+        Assert.assertEquals("chakra-button css-1k86uh7", secondPosition );
+    }
+    @When("the user clicks on the {string} button")
+    public void theUserClicksOnTheButton(String arg0) {
+        salesforcePage.ReloadBtn.click();
+    }
 
-            salesforcePage.ticketSwitchDefaultText.isDisplayed();
-        }
+    @Then("the chatbot should refresh its content")
+    public void theChatbotShouldRefreshItsContent() {
+        salesforcePage.ReloadDefaultContent.isDisplayed();
+        Assert.assertTrue("Chatbot content is not displayed after refresh.", salesforcePage.ReloadDefaultContent.isDisplayed());
     }
 }
 
