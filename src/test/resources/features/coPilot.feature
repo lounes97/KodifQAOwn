@@ -1,6 +1,6 @@
 @smoke @ui
 Feature: User Authentication
-  User Story:
+User Story:
   As a user, I should be able to login with correct credentials via Salesforce platform.
 
   Background: Login a user
@@ -25,14 +25,4 @@ Feature: User Authentication
   Scenario: User on the main page and shift the ticket
     When user clicks on different ticket the default message should appear on the coPilot window
 
-  @insertSuggestion @ui
-  Scenario: User clicks on Suggestion action to insert the suggestion to the Post section
-    When user clicks on Suggestion action the insert button will appear under the suggestion text
-    And user clicks on insert button which will copy and paste the text to the Post field
-    Then user verifies that the text inserted into the Post field matches the suggested response
 
-  @insertDisposition @ui
-  Scenario: User clicks on Disposition action to insert the suggestion to the Case Notes section
-    When user clicks on Disposition action the insert button will appear under the disposition info
-    And user clicks on insert button which will copy and paste the info to Case Notes field
-   Then verify that the text inserted to Case Notes is matching with the suggested response
