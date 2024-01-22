@@ -75,7 +75,7 @@ public class Driver {
                 case "chrome_test":
                     ChromeOptions options = new ChromeOptions();
                     options.setBinary("/Applications/Google_Chrome_for_Testing.app");
-                    options.addExtensions(new File("extensions/Kodif Copilot 1.2.26.0.crx"));
+                    options.addExtensions(new File("extensions/Kodif_Copilot_1.2.53.0.crx"));
                     driverPool.set(new ChromeDriver(options));
                     driverPool.get().manage().window().maximize();
                     driverPool.get().manage().timeouts().implicitlyWait(Duration.ofSeconds(10));

@@ -1,6 +1,6 @@
 @smoke @ui
 Feature: User Authentication
-User Story:
+  User Story:
   As a user, I should be able to login with correct credentials via Salesforce platform.
 
   Background: Login a user
@@ -21,8 +21,19 @@ User Story:
   Scenario: User clicks on command button and select one of the action
     When user enter a string in input field and press enter key
 
-  @ticketSwitch @ui
-  Scenario: User on the main page and shift the ticket
-    When user clicks on different ticket the default message should appear on the coPilot window
+
+@dockFeature @ui
+Scenario: User test Dock button
+  When the user clicks on Dock button
+  Then the chatbot should be docked to the left side of the screen
+  When user refresh the page the chatbot should stay on the left side of the screen
+  When the user clicks on Dock button
+  Then the chatbot should be docked to the right side of the screen
+
+
+@reloadFeature @ui
+Scenario: User clicks the "Reload" button
+  When the user clicks on the "Reload" button
+  Then the chatbot should refresh its content
 
 
