@@ -1,18 +1,24 @@
 package com.minted.pages;
 
+import com.gargoylesoftware.htmlunit.Page;
+import com.minted.utility.BrowserUtils;
 import com.minted.utility.Driver;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 public class TrustPage {
 
-    public TrustPage(){
+    public TrustPage() {
         PageFactory.initElements(Driver.getDriver(), this);
 
 
     }
-    @FindBy(xpath = "//input[@name='chat-box']")
+
+    //@FindBy(xpath = "//input[@name='chat-box']")
+    @FindBy(xpath = "//input[@placeholder='Tell us something...']")
+    //@FindBy(css = "input[placeholder='Tell us something...']")
     public WebElement trustSearchBox;
 
     @FindBy(xpath = "//div[@class='makeStyles-submitBtn-21']")
@@ -58,10 +64,11 @@ public class TrustPage {
 
     @FindBy(css = "svg[data-testid='SentimentVerySatisfiedIcon']")
     public WebElement emojiBtn;
+
     @FindBy(css = "iframe[id='kodif-chat-widget']")
     public WebElement iframe;
 
-    @FindBy(xpath = "//button[@class='MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium css-1gpkj7r-MuiButtonBase-root-MuiButton-root']")
+    @FindBy(xpath = "//div/button[contains(text(),'Start a New Conversation')]")
     public WebElement newConversationBtn;
 
     @FindBy(xpath = "//div[@class='MuiBox-root css-1bkwata']")
@@ -75,10 +82,46 @@ public class TrustPage {
     @FindBy(xpath = "//div[contains(text(),'What is wallet')]")
     public WebElement uploadWalletText;
 
-    @FindBy(css="input[type='file']")
+    @FindBy(css = "input[type='file']")
     public WebElement fileInput;
 
+    @FindBy(xpath = "//div/p[contains(text(),'Sure! Please provide more details (e.g. transaction hash, relevant wallet addresses etc.) and I will have someone reach out to you. ')]")
+    public WebElement agentTalkResponse;
+
+    @FindBy(xpath = "//div/p[contains(text(),'The email')]")
+    public WebElement wrongEmailResponse;
+
+    @FindBy(xpath = "//div/p[contains(text(),'Please select your issue:')]")
+    public WebElement posEmailResponse;
+
+    @FindBy(xpath = "//button[text()='More']")
+    public WebElement moreBtn;
 
 
+    //@FindBy(xpath = "//button[contains(text(),'Other')]")
+    //@FindBy(xpath = "//button[normalize-space()='Other']")
+    @FindBy(css = "body > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > button:nth-child(2)")
+    public WebElement otherBtn;
 
+    @FindBy(xpath = "//div/p[contains(text(),'Please select sub-category:')]")
+    public WebElement selectSubCategory;
+
+    @FindBy(xpath = "//button[2]")
+    //@FindBy(xpath = "//button[normalize-space()='General/ How To's/ Guides']")
+    public WebElement subCategoryResponse;
+
+    @FindBy(xpath = "//div/p[contains(text(),'Please provide any relevant details such as your OS, app version, transaction hash, wallet address, etc:')]")
+    public WebElement SubCatMsg;
+
+    //@FindBy(xpath = "//div/p[contains(text(),'It looks like you currently have an open ticket. Our support team will respond within 3-5 business days. Creating multiple tickets for a single issue may increase your wait time.')]")
+    @FindBy(xpath = "//p[contains(text(),'It looks like you currently have an open ticket. O')]")
+    public WebElement supportTeamResponse;
+
+    @FindBy(xpath = "//div[@class='makeStyles-quickRepliesBoxContainerMini-13']")
+    public WebElement boxContainer;
+
+    @FindBy(xpath = "//div[contains(@class, 'bouncing-loader')]")
+    public WebElement bouncingLouder;
 }
+
+

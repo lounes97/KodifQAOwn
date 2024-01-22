@@ -45,3 +45,19 @@ Scenario: User Rates the Response
   Scenario: User uploads a .docx file
     When the user selects a .docx file to attach
     Then file is successfully attached
+
+    @talkAgentNeg @ui
+      Scenario: user is trying to interact with the chatbot's agent
+      When the user ask to talk with agent and use wrong email
+      Then the chatbot will ask for correct email
+
+      @talkAgentPos @ui
+      Scenario: user is trying to interact with the chatbot's agent
+        When the user ask to talk with agent and use correct email
+        And the chatbot will ask to select the issue and provide More, Other option buttons
+        And user clicks Other option
+        And user selects sub-category issue and provide more detail
+        Then user select yes or no and the conversation will end
+
+
+

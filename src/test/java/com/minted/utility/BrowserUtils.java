@@ -2,7 +2,6 @@ package com.minted.utility;
 
 import org.junit.Assert;
 import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -14,6 +13,9 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
+
+import static org.bouncycastle.oer.its.ieee1609dot2.basetypes.Duration.seconds;
 /*
 This class will be storing only the utility methods that can be used across the project.
  */
@@ -64,7 +66,7 @@ public class BrowserUtils {
     This method accepts WebElement target,
     and waits for that WebElement not to be displayed on the page
      */
-    public static void waitForInvisibilityOf(WebElement target){
+    public static void waitForInvisibilityOf(WebElement target, int i){
         //Create the object of 'WebDriverWait' class, and set up the constructor args
         WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(10));
 
@@ -183,10 +185,8 @@ public class BrowserUtils {
 
     /**
      * Performs a pause
-     *
-     * @param seconds
      */
-    public static void waitFor(int seconds) {
+    public static void waitFor(int i) {
         try {
             Thread.sleep(seconds * 1000);
         } catch (InterruptedException e) {
@@ -387,7 +387,7 @@ public class BrowserUtils {
      */
     public static void highlight(WebElement element) {
         ((JavascriptExecutor) Driver.getDriver()).executeScript("arguments[0].setAttribute('style', 'background: yellow; border: 2px solid red;');", element);
-        waitFor(1);
+        waitFor(15);
         ((JavascriptExecutor) Driver.getDriver()).executeScript("arguments[0].removeAttribute('style', 'background: yellow; border: 2px solid red;');", element);
     }
 
@@ -421,7 +421,7 @@ public class BrowserUtils {
                 element.click();
                 return;
             } catch (WebDriverException e) {
-                waitFor(1);
+                waitFor(15);
             }
         }
     }
@@ -472,22 +472,14 @@ public class BrowserUtils {
                 e.printStackTrace();
                 ++counter;
                 //wait for 1 second, and try to click again
-                waitFor(1);
+                waitFor(15);
             }
         }
     }
 
-    /**
-     *  checks that an element is present on the DOM of a page. This does not
-     *    * necessarily mean that the element is visible.
-     * @param by
-     * @param time
-     */
-    public static void waitForPresenceOfElement(By by, long time) {
-        new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(time)).until(ExpectedConditions.presenceOfElementLocated(by));
-    }
 
-     /* Waits for the frame with the given name or id to be available and switches to it.
+
+    /* Waits for the frame with the given name or id to be available and switches to it.
      *
              * @param frameNameOrId The name or id of the frame to switch to.
      * @param timeInSeconds The maximum time (in seconds) to wait for the frame.
@@ -514,5 +506,41 @@ public class BrowserUtils {
     public static LocalDateTime captureCurrentTime() {
         return LocalDateTime.now();
 
+
     }
+
+
+    public static boolean waitForBouncingLoaderToDisappear(WebElement bouncingLoader) {
+        long startTime = System.currentTimeMillis();
+        long timeoutInSeconds = 60; // Adjust the timeout as needed
+        long elapsedTime;
+
+        while (true) {
+            try {
+                if (!bouncingLoader.isDisplayed()) {
+                    return true; // The element is no longer displayed
+                }
+            } catch (StaleElementReferenceException e) {
+                // Element has become stale, which means it might have disappeared
+                return false;
+            }
+            // Check if the timeout has been reached
+            elapsedTime = System.currentTimeMillis() - startTime;
+            if (elapsedTime >= TimeUnit.SECONDS.toMillis(timeoutInSeconds)) {
+                return false; // Timeout reached, the element is still displayed
+            }
+            // Sleep for a short interval before checking again
+            try {
+                Thread.sleep(2000); // Sleep for 1 second, you can adjust the interval as needed
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        }
+    }
+
 }
+
+
+
+
+

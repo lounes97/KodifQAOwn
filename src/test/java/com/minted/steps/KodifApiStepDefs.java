@@ -15,8 +15,8 @@ public class KodifApiStepDefs {
 
     Response response;
 
-    @When("user login with correct credential")
-    public void user_login_with_correct_credential() {
+    @When("user loging in with correct credential")
+    public void user_loging_in_with_correct_credential() {
         Map<String, Object> kodifUser = new LinkedHashMap<>();
         kodifUser.put("email", "usenkanov@gmail.com");
         kodifUser.put("password", "massword");

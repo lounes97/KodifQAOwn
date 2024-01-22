@@ -25,4 +25,5 @@ public abstract class BasePage {
     @FindBy(xpath = "//p[@data-test-id='kodif-intro-msg']")
     public WebElement ticketSwitchDefaultText;
 
+
 }
