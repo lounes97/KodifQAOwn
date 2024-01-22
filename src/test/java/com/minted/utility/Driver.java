@@ -55,7 +55,7 @@ public class Driver {
                 case "remote-firefox":
                     try {
                         // assign your grid server address
-                        String gridAddress = "52.90.101.17";
+                        String gridAddress = "jenkins.kodif.io/";
                         URL url = new URL("http://"+ gridAddress + ":4444/wd/hub");
                         DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
                         desiredCapabilities.setBrowserName("firefox");
@@ -75,7 +75,7 @@ public class Driver {
                 case "chrome_test":
                     ChromeOptions options = new ChromeOptions();
                     options.setBinary("/Applications/Google_Chrome_for_Testing.app");
-                    options.addExtensions(new File("extensions/Kodif Copilot 1.2.26.0.crx"));
+                    options.addExtensions(new File("extensions/Kodif_Copilot_1.2.53.0.crx"));
                     driverPool.set(new ChromeDriver(options));
                     driverPool.get().manage().window().maximize();
                     driverPool.get().manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
@@ -90,6 +90,8 @@ public class Driver {
                     driverPool.get().manage().window().maximize();
                     driverPool.get().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
                     break;
+
+
             }
 
         }
