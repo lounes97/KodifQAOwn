@@ -42,7 +42,7 @@ public class Driver {
                     try {
                         // assign your grid server address
                         String gridAddress = "jenkins.kodif.io/";
-                        URL url = new URL("http://"+ gridAddress);
+                        URL url = new URL("http://"+ gridAddress + ":4444/wd/hub");
                         DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
                         desiredCapabilities.setBrowserName("chrome");
                         driverPool.set(new RemoteWebDriver(url, desiredCapabilities));
